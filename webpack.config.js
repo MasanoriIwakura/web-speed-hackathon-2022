@@ -97,6 +97,9 @@ module.exports = [
       ],
     },
     name: "server",
+    optimization: {
+      minimize: false,
+    },
     output: {
       filename: "server.js",
       path: DIST_ROOT,
