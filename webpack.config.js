@@ -59,7 +59,9 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: PUBLIC_ROOT, to: DIST_PUBLIC }],
       }),
-      new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: process.env.ANALYZE === "true" ? "server" : "disabled"
+      }),
     ],
     resolve: {
       extensions: [".js", ".jsx"],
