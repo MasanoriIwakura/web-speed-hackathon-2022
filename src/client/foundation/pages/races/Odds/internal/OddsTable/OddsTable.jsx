@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 
@@ -86,7 +87,7 @@ export const OddsTable = ({ entries, isRaceClosed, odds, onClickOdds }) => {
     setFirstKey(parseInt(e.currentTarget.value, 10));
   }, []);
 
-  const headNumbers = [...Array(entries.length)].map((_, i) => i + 1).filter((num) => num !== firstKey);
+  const headNumbers = _.without(_.range(1, entries.length + 1), firstKey);
 
   const filteredOdds = odds.filter((item) => item.key[0] === firstKey);
   const oddsMap = filteredOdds.reduce((acc, cur) => {
