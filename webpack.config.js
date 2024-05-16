@@ -4,6 +4,8 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 function abs(...args) {
   return path.join(__dirname, ...args);
 }
@@ -57,6 +59,9 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: PUBLIC_ROOT, to: DIST_PUBLIC }],
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: process.env.ANALYZE === "true" ? "server" : "disabled"
+      }),
     ],
     resolve: {
       extensions: [".js", ".jsx"],
@@ -92,6 +97,9 @@ module.exports = [
       ],
     },
     name: "server",
+    optimization: {
+      minimize: false,
+    },
     output: {
       filename: "server.js",
       path: DIST_ROOT,

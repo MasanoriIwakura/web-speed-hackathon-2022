@@ -40,7 +40,7 @@ export const apiRoute = async (fastify) => {
   });
 
   fastify.get("/hero", async (_req, res) => {
-    const url = assets("/images/hero.jpg");
+    const url = assets("/images/hero.webp");
     const hash = Math.random().toFixed(10).substring(2);
 
     res.send({ hash, url });
@@ -83,6 +83,11 @@ export const apiRoute = async (fastify) => {
       where,
     });
 
+    races.forEach((race) => {
+      race.image = race.image.replace('.jpg', '.webp');
+      race.entries?.player?.image.replace('.jpg', '.webp');
+    });
+
     res.send({ races });
   });
 
@@ -96,6 +101,9 @@ export const apiRoute = async (fastify) => {
     if (race === undefined) {
       throw fastify.httpErrors.notFound();
     }
+
+    race.image = race.image.replace('.jpg', '.webp');
+    race.entries?.player?.image.replace('.jpg', '.webp');
 
     res.send(race);
   });
